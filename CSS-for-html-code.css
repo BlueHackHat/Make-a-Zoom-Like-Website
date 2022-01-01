@@ -32,10 +32,10 @@ div {
    top: 350px;    
 }     
         
-    button:hover {
-        background-color: aqua; 
-        color: blue;
-    }         
+button:hover {
+    background-color: aqua; 
+    color: blue;
+}         
     
 button{
   background: #000000;
@@ -45,47 +45,48 @@ button{
   height: 30px;
 }          
 
-    #capture{
+#capture{
    float: right;
    position: absolute;
    right: 500px;
    top: 18px;          
-        }
+}
         
-    #player{
-   float: right;
-   position: absolute;
-   right: 350px;
-   top: 40px;  
+#player{
+  float: right;
+  position: absolute;
+  right: 350px;
+  top: 40px;  
   border: 3px solid #00ffff;
   border-radius: 4px;         
-        }        
+}        
       
-    #cam{
+#cam{
    float: right;
-background-color: #00ffff;         
+   background-color: #00ffff;         
    position: absolute;
    right: 540px;
    top: 290px;  
-  border: 3px solid #00ffff;
-  border-radius: 15px;  
-    color: #ffffff;    
-        } 
+   border: 3px solid #00ffff;
+   border-radius: 15px;  
+   color: #ffffff;    
+} 
         
-    #mic{
+#mic{
    float: right;
-background-color: #00ffff;         
+   background-color: #00ffff;         
    position: absolute;
    right: 480px;
    top: 290px;  
-  border: 3px solid #00ffff;
-  border-radius: 15px;  
-    color: #000000;    
-        }     
+   border: 3px solid #00ffff;
+   border-radius: 15px;  
+   color: #000000;    
+}     
         
-			.hide {
-			    display:none;
-			}
-			.show {
-			    display:block;
-			}        
+.hide {
+    display:none;
+}
+
+.show {
+   display:block;
+}        
