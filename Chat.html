@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat</title>
+    <style>
+      body {
+        background-color: #003333;
+      }
+        
+footer{
+  text-align: right;
+  font-style: italic;
+  background-color: #000000;
+  color: #000000;
+   float: right;
+   position: absolute;
+   right: 0px;
+   top: 457px;           
+  width: 10010px;
+  height: 120px;
+}    
+        
+div {
+  width: 720px;
+  height: 430px;
+  background-color: #000000;  
+   float: right;
+   position: absolute;
+   right: 10px;
+   top: 10px;       
+}
+        
+#right{
+   float: right;
+   position: absolute;
+   right: 900px;
+   top: 350px;    
+}     
+        
+    button:hover {
+        background-color: aqua; 
+        color: blue;
+    }         
+    
+button{
+  background: #000000;
+  border: 3px solid #00ffff;
+  border-radius: 4px; 
+  color: #00ffff; 
+  height: 30px;
+}          
+
+    #capture{
+   float: right;
+   position: absolute;
+   right: 500px;
+   top: 18px;          
+        }
+        
+    #player{
+   float: right;
+   position: absolute;
+   right: 350px;
+   top: 40px;  
+  border: 3px solid #00ffff;
+  border-radius: 4px;         
+        }        
+      
+    #cam{
+   float: right;
+background-color: #00ffff;         
+   position: absolute;
+   right: 540px;
+   top: 290px;  
+  border: 3px solid #00ffff;
+  border-radius: 15px;  
+    color: #ffffff;    
+        } 
+        
+    #mic{
+   float: right;
+background-color: #00ffff;         
+   position: absolute;
+   right: 480px;
+   top: 290px;  
+  border: 3px solid #00ffff;
+  border-radius: 15px;  
+    color: #000000;    
+        }     
+        
+			.hide {
+			    display:none;
+			}
+			.show {
+			    display:block;
+			}        
+        
+    </style>
+  </head>
+<body>   
+    <button id="capture">capture</button>
+             <video id="video" width=510 height=305 autoplay=""></video>
+<br> 
+    <div>
+    <video id="player" autoplay width=320 height=240></video>
+        <button id="cam">🎥</button>    
+        <button id="mic">🎙</button>    
+    </div>
+<canvas id="canvas" width=320 height=240></canvas>
+<script>
+  const player = document.getElementById('player');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const captureButton = document.getElementById('capture');
+
+  const constraints = {
+    video: true,
+  };
+
+  captureButton.addEventListener('click', () => {
+    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+
+    // Stop all video streams.
+    player.srcObject.getVideoTracks().forEach(track => track.stop());
+  });
+
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      // Attach the video stream to the video element and autoplay.
+      player.srcObject = stream;
+    });
+</script>  
+    
+</body>
+    <footer>
+        <p><button id="start">Share Screen</button>&nbsp;<button id="stop" >Stop Capture</button></p>
+
+<strong>Log:</strong>
+<br>
+<pre id="log"></pre>
+        
+        
+            <script>
+                const videoElem = document.getElementById("video");
+const logElem = document.getElementById("log");
+const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
+
+// Options for getDisplayMedia()
+
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: false
+};
+
+// Set event listeners for the start and stop buttons
+startElem.addEventListener("click", function(evt) {
+  startCapture();
+}, false);
+
+stopElem.addEventListener("click", function(evt) {
+  stopCapture();
+}, false);
+console.log = msg => logElem.innerHTML += `${msg}<br>`;
+console.error = msg => logElem.innerHTML += `<span class="error">${msg}</span><br>`;
+console.warn = msg => logElem.innerHTML += `<span class="warn">${msg}<span><br>`;
+console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`;
+async function startCapture() {
+  logElem.innerHTML = "";
+
+  try {
+    videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+    dumpOptionsInfo();
+  } catch(err) {
+    console.error("Error: " + err);
+  }
+}
+function stopCapture(evt) {
+  let tracks = videoElem.srcObject.getTracks();
+
+  tracks.forEach(track => track.stop());
+  videoElem.srcObject = null;
+}
+function dumpOptionsInfo() {
+  const videoTrack = videoElem.srcObject.getVideoTracks()[0];
+
+  console.info("Track settings:");
+  console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
+  console.info("Track constraints:");
+  console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+}
+            </script>
+    </footer>    
+</html>
